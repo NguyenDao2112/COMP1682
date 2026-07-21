@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ManagementDriver" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Brand Colors -->
+        <item name="colorPrimary">@color/color_primary_green</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/color_primary_green</item>
+
+        <!-- Global Aesthetic -->
+        <item name="android:windowBackground">@color/color_bg_main</item>
+        <item name="android:textColorPrimary">@color/charcoal</item>
+        <item name="android:textColorSecondary">@color/color_soft_gray</item>
+
+        <!-- Component Styling -->
+        <item name="materialCardViewStyle">@style/Widget.App.Card</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+    </style>
+</resources>

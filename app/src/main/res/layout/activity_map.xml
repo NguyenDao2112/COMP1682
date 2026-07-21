@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_map_dark">
+
+    <!-- LIVE NAVIGATION MAP -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- TOP COMMAND HEADER -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:id="@+id/topHeader"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/bg_glass_card"
+            android:paddingHorizontal="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_circle_slate"
+                android:src="@drawable/ic_back"
+                app:tint="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeaderRouteId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RT-7429"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.2"
+                    android:text="FLEET COMMAND"
+                    android:textColor="@color/white"
+                    android:alpha="0.7"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llOnlineBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_online_badge"
+                android:backgroundTint="@color/glass_overlay_dark"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <View
+                    android:id="@+id/vOnlineDot"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/bg_pulse_dot" />
+
+                <TextView
+                    android:id="@+id/tvOnlineStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="SYSTEM ONLINE"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- OPERATIONAL PANEL (NEXT STOP) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvNextDest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="100dp"
+            app:cardBackgroundColor="#CC0F172A"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeColor="#30FFFFFF"
+            app:strokeWidth="1.5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cvEta"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvDriverNameOnMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_online_badge"
+                        android:backgroundTint="#FF9100"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp"
+                        android:text="STOP #01"
+                        android:textColor="@color/white"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        tools:ignore="SmallSp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="NEXT MISSION"
+                        android:textColor="#94A3B8"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        tools:ignore="SmallSp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNextStopAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Market Street Center"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <!-- Turn-by-Turn Navigation Instruction -->
+                <LinearLayout
+                    android:id="@+id/llNavigationStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvManeuverIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⬆"
+                        android:textColor="#38BDF8"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvManeuverText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Head south on Bach Dang St"
+                        android:textColor="#E2E8F0"
+                        android:textSize="11sp"
+                        android:ellipsize="end"
+                        android:maxLines="1" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ETA PANEL -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvEta"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="100dp"
+            app:cardBackgroundColor="#CC10B981"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeColor="#30FFFFFF"
+            app:strokeWidth="1.5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="10dp">
+                <TextView
+                    android:id="@+id/tvETA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MIN"
+                    android:textColor="@color/white"
+                    android:alpha="0.8"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRecenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="340dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/charcoal"
+            app:srcCompat="@drawable/ic_navigation"
+            app:tint="@color/color_primary_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- OPERATIONAL CONTROL PANEL -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_peekHeight="320dp"
+        app:behavior_hideable="false"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:cardBackgroundColor="#F8FAFC"
+        app:cardCornerRadius="32dp"
+        app:strokeColor="#E2E8F0"
+        app:strokeWidth="1dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Card.TopOnly">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Drag Handle (Directly Draggable Outside Scroll Container) -->
+            <View
+                android:layout_width="60dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_circle_slate"
+                android:backgroundTint="@color/slate_200" />
+
+            <!-- Title & Route Status Header in Vertical Stack to Prevent Overlap/Truncation -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                
+                <TextView
+                    android:id="@+id/tvDistrictName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hai Chau District Collection Route"
+                    android:textColor="@color/charcoal"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                    
+                <TextView
+                    android:id="@+id/tvRouteSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="9 STOPS LEFT"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/routeProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:indicatorColor="@color/color_primary_green"
+                app:trackColor="@color/slate_100"
+                app:trackThickness="10dp"
+                app:trackCornerRadius="5dp"
+                android:progress="66" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNavigate"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/bg_confirm_button"
+                android:text="START STOP #01 COLLECTION"
+                android:textColor="@color/charcoal"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_check_circle"
+                app:iconPadding="12dp"
+                app:iconGravity="textStart"
+                app:cornerRadius="16dp"
+                app:elevation="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRouteStops"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="100dp"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:scrollbarSize="6dp"
+                android:scrollbarThumbVertical="@color/color_primary_green"
+                tools:listitem="@layout/item_bin" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- BOTTOM COMMAND NAVIGATION -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom"
+        app:cardCornerRadius="36dp"
+        app:cardElevation="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Route -->
+            <LinearLayout
+                android:id="@+id/navRoute"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_map"
+                    app:tint="@color/color_primary_green"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Activity -->
+            <LinearLayout
+                android:id="@+id/navActivity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_history"
+                    app:tint="@color/color_soft_gray"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activity"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <!-- Status -->
+            <LinearLayout
+                android:id="@+id/navStatus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_warning"
+                    app:tint="@color/color_soft_gray"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_profile"
+                    app:tint="@color/color_soft_gray"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

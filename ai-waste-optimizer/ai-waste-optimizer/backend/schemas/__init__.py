@@ -1,0 +1,30 @@
+# backend/schemas/__init__.py
+"""Pydantic Schemas for Request/Response Validation"""
+from backend.schemas.schemas import (
+    UserRole,
+    UserBase,
+    UserCreate,
+    UserUpdate,
+    UserResponse,
+    UserLogin,
+    Token,
+    BinBase,
+    BinCreate,
+    BinUpdate,
+    BinResponse,
+    RouteBase,
+    RouteCreate,
+    RouteUpdate,
+    RouteResponse,
+    FeedbackBase,
+    FeedbackCreate,
+    FeedbackUpdate,
+    FeedbackResponse,
+    NotificationBase,
+    NotificationCreate,
+    NotificationResponse,
+    KPIBase,
+    KPICreate,
+    KPIResponse,
+    DashboardStats
+)

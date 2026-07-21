@@ -1,0 +1,168 @@
+{
+  "info": {
+    "_postman_id": "driver-route-api-collection",
+    "name": "Driver Route Sequence API",
+    "description": "API collection for testing Driver Route Sequence endpoint - Android integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Driver Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.environment.set('driver_token', jsonData.token);",
+              "    pm.test('Token saved to environment', function() {",
+              "        pm.expect(jsonData.token).to.exist;",
+              "    });",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"driver_id\": \"driver_route_001\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/driver/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "driver",
+            "login"
+          ]
+        },
+        "description": "Authenticate as a driver and receive JWT token"
+      },
+      "response": [
+        {
+          "name": "Login Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"driver_id\": \"driver_route_001\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/driver/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "driver",
+                "login"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkcml2ZXJfcm91dGVfMDAxIiwiZXhwIjoxNzE3OTQwNzQ5fQ.5MkJd_xyz\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "2. Get Route Sequence (10 Bins - District 1 HCM)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{driver_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/driver/route/sequence",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "driver",
+            "route",
+            "sequence"
+          ]
+        },
+        "description": "Get list of waste bins in the driver's current route with coordinates and fill levels"
+      },
+      "response": [
+        {
+          "name": "Route Sequence Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/driver/route/sequence",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "driver",
+                "route",
+                "sequence"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"route\": [\n    {\n      \"id\": \"BIN_QD1_001\",\n      \"location_name\": \"842 Industrial Way, District 1\",\n      \"latitude\": 10.762622,\n      \"longitude\": 106.660172,\n      \"current_fill_level\": 92.5,\n      \"bin_type\": \"Commercial\",\n      \"zone\": \"Zone 4\"\n    },\n    {\n      \"id\": \"BIN_QD1_002\",\n      \"location_name\": \"523 Dong Khoi Street, District 1\",\n      \"latitude\": 10.773245,\n      \"longitude\": 106.701234,\n      \"current_fill_level\": 78.3,\n      \"bin_type\": \"Commercial\",\n      \"zone\": \"Zone 4\"\n    },\n    {\n      \"id\": \"BIN_QD1_003\",\n      \"location_name\": \"Tao Duc Thang Park Entrance\",\n      \"latitude\": 10.779534,\n      \"longitude\": 106.71289,\n      \"current_fill_level\": 45.6,\n      \"bin_type\": \"Public\",\n      \"zone\": \"Zone 3\"\n    },\n    {\n      \"id\": \"BIN_QD1_004\",\n      \"location_name\": \"123 Nguyen Hue Boulevard\",\n      \"latitude\": 10.777123,\n      \"longitude\": 106.7056,\n      \"current_fill_level\": 65.4,\n      \"bin_type\": \"Public\",\n      \"zone\": \"Zone 3\"\n    },\n    {\n      \"id\": \"BIN_QD1_005\",\n      \"location_name\": \"Residential Complex A - Ly Tu Trong\",\n      \"latitude\": 10.768901,\n      \"longitude\": 106.695432,\n      \"current_fill_level\": 32.1,\n      \"bin_type\": \"Residential\",\n      \"zone\": \"Zone 4\"\n    },\n    {\n      \"id\": \"BIN_QD1_006\",\n      \"location_name\": \"Saigon Trade Center Area\",\n      \"latitude\": 10.77589,\n      \"longitude\": 106.718765,\n      \"current_fill_level\": 88.9,\n      \"bin_type\": \"Commercial\",\n      \"zone\": \"Zone 3\"\n    },\n    {\n      \"id\": \"BIN_QD1_007\",\n      \"location_name\": \"Ho Chi Minh City Museum\",\n      \"latitude\": 10.776543,\n      \"longitude\": 106.704321,\n      \"current_fill_level\": 55.2,\n      \"bin_type\": \"Public\",\n      \"zone\": \"Zone 3\"\n    },\n    {\n      \"id\": \"BIN_QD1_008\",\n      \"location_name\": \"Residential Complex B - Mac Thi Buoi\",\n      \"latitude\": 10.770234,\n      \"longitude\": 106.700987,\n      \"current_fill_level\": 41.7,\n      \"bin_type\": \"Residential\",\n      \"zone\": \"Zone 4\"\n    },\n    {\n      \"id\": \"BIN_QD1_009\",\n      \"location_name\": \"Shopping Mall - District 1 Central\",\n      \"latitude\": 10.774567,\n      \"longitude\": 106.710654,\n      \"current_fill_level\": 73.5,\n      \"bin_type\": \"Commercial\",\n      \"zone\": \"Zone 3\"\n    },\n    {\n      \"id\": \"BIN_QD1_010\",\n      \"location_name\": \"Street Market - Hang Bong\",\n      \"latitude\": 10.769876,\n      \"longitude\": 106.698543,\n      \"current_fill_level\": 59.8,\n      \"bin_type\": \"Public\",\n      \"zone\": \"Zone 4\"\n    }\n  ]\n}"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "driver_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

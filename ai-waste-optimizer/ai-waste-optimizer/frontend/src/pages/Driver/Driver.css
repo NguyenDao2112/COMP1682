@@ -1,0 +1,358 @@
+/* Driver.css - Driver Dashboard & Route View */
+.driver-dashboard {
+  padding: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.driver-welcome {
+  margin-bottom: var(--spacing-xl);
+}
+
+.driver-welcome h1 {
+  font-size: 28px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.driver-welcome p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Stats */
+.driver-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.driver-stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.driver-stat-card .stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius-md);
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.driver-stat-card .stat-icon.success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.driver-stat-card .stat-icon.warning {
+  background: rgba(255, 193, 7, 0.2);
+  color: #FFC107;
+}
+
+.driver-stat-card .stat-info h3 {
+  font-size: 24px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.driver-stat-card .stat-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Routes Section */
+.routes-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.routes-section h2 {
+  font-size: 20px;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.empty-routes {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  background: var(--glass-bg);
+  border-radius: var(--border-radius-lg);
+}
+
+.empty-routes i {
+  font-size: 48px;
+  color: #4CAF50;
+  margin-bottom: var(--spacing-md);
+}
+
+.empty-routes p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.routes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.route-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.route-info h3 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.route-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px 0;
+}
+
+.route-info p i {
+  margin-right: 6px;
+}
+
+.route-meta {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.route-meta span {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  color: var(--bg-dark);
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-normal);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 230, 118, 0.4);
+}
+
+/* Activity Section */
+.activity-section h2 {
+  font-size: 20px;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.activity-list {
+  background: var(--glass-bg);
+  border-radius: var(--border-radius-lg);
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-icon.success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.activity-content p {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.activity-content span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Loading */
+.driver-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* Route View - Split Screen */
+.route-view {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+.route-map {
+  flex: 1;
+  height: 100%;
+}
+
+.route-stops {
+  width: 400px;
+  background: var(--bg-dark-secondary);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.route-stops-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.route-stops-header h2 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.route-stops-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.stops-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.stop-item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.stop-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stop-item.completed {
+  opacity: 0.6;
+}
+
+.stop-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.stop-item.completed .stop-number {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.stop-info {
+  flex: 1;
+}
+
+.stop-info h4 {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.stop-info p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.btn-collect {
+  padding: 8px 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-collect:hover {
+  background: var(--primary-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .driver-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .route-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .route-view {
+    flex-direction: column;
+  }
+
+  .route-stops {
+    width: 100%;
+    height: 50%;
+  }
+}

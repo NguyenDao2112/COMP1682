@@ -1,0 +1,131 @@
+/* ========================================
+   Footer - AI Waste Optimizer
+   Dark/Light Mode Support
+   ======================================== */
+
+.site-footer {
+  padding: 64px 0 0;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.site-footer.dark {
+  background: #0F172A;
+  border-top: 1px solid #1E293B;
+  color: #F1F5F9;
+}
+
+.site-footer.light {
+  background: #0F172A;
+  border-top: 1px solid #1E293B;
+  color: #F1F5F9;
+}
+
+.sf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.sf-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.sf-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin-bottom: 12px;
+}
+
+.sf-logo i { color: #22C55E; }
+
+.sf-brand p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #94A3B8;
+  margin: 0;
+  max-width: 320px;
+}
+
+.sf-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sf-col a {
+  display: block;
+  font-size: 14px;
+  color: #94A3B8;
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.sf-col a:hover { color: #22C55E; }
+
+.sf-socials {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sf-socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.sf-socials a:hover {
+  background: #22C55E;
+  color: white;
+}
+
+.sf-address {
+  font-size: 13px;
+  color: #64748B;
+  margin: 0;
+}
+
+.sf-address i { margin-right: 6px; color: #22C55E; }
+
+.sf-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.sf-bottom p {
+  font-size: 13px;
+  color: #64748B;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sf-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .sf-brand p {
+    max-width: none;
+  }
+}

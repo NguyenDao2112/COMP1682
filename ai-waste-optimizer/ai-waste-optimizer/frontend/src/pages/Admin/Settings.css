@@ -1,0 +1,468 @@
+/* Admin Settings Page Styles */
+
+.admin-settings {
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.admin-settings.light {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.admin-settings.dark {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+.admin-settings .page-header {
+  margin-bottom: 24px;
+}
+
+.admin-settings .page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0 0 8px 0;
+  transition: color 0.3s ease;
+}
+
+.admin-settings .page-header p {
+  color: var(--text-secondary, #666);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.admin-settings .success-message {
+  background: var(--success-bg, #e8f5e9);
+  color: var(--success-color, #2e7d32);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.admin-settings .settings-form {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+}
+
+.admin-settings.dark .settings-form,
+.admin-settings.dark .card,
+.admin-settings.dark .account-info,
+.admin-settings.dark .system-info {
+  background: var(--card-bg);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+.admin-settings.dark .settings-form {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.admin-settings.dark .card {
+  box-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);
+}
+
+.admin-settings.dark .account-info {
+  background: var(--hover-bg);
+}
+
+.admin-settings.dark .system-info {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admin-settings .card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+  border: 1px solid var(--border-color, #eee);
+}
+
+.admin-settings .card:last-of-type {
+  margin-bottom: 0;
+}
+
+.admin-settings .card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.admin-settings .card-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.3s ease;
+}
+
+.admin-settings .card-header i {
+  color: var(--accent-color, #00E676);
+  font-size: 20px;
+}
+
+/* Account Information */
+.admin-settings .account-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  background: var(--hover-bg, #f8f9fa);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.admin-settings .avatar-large {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-color, #00E676);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-text, #000);
+  flex-shrink: 0;
+}
+
+.admin-settings .account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-settings .account-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary, #1a1a2e);
+  transition: color 0.3s ease;
+}
+
+.admin-settings .account-email {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.admin-settings .role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent-light, #00E67620);
+  color: var(--accent-color, #00c853);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+/* Form Groups */
+.admin-settings .form-group {
+  margin-bottom: 16px;
+}
+
+.admin-settings .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.admin-settings .form-group > label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-primary, #1a1a2e);
+  transition: color 0.3s ease;
+}
+
+.admin-settings .form-group input[type="text"],
+.admin-settings .form-group input[type="email"],
+.admin-settings .form-group input[type="number"],
+.admin-settings .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--input-bg, #fff);
+  color: var(--text-primary, #1a1a2e);
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.admin-settings .form-group input:focus,
+.admin-settings .form-group select:focus {
+  outline: none;
+  border-color: var(--accent-color, #00E676);
+  box-shadow: 0 0 0 3px var(--accent-light, #00E67620);
+}
+
+.admin-settings .form-group input::placeholder {
+  color: var(--text-hint, #999);
+}
+
+.admin-settings .form-hint {
+  font-size: 12px;
+  color: var(--text-hint, #999);
+  margin-top: 4px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+/* Switch/Toggle */
+.admin-settings .switch-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.admin-settings .switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.admin-settings .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.admin-settings .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle-off, #ccc);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.admin-settings .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-settings input:checked + .slider {
+  background-color: var(--accent-color, #00E676);
+}
+
+.admin-settings input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* System Info */
+.admin-settings .system-info {
+  background: var(--hover-bg, #f8f9fa);
+  border-radius: 8px;
+  padding: 16px;
+  transition: background 0.3s ease;
+}
+
+.admin-settings .info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.admin-settings .info-item:last-child {
+  border-bottom: none;
+}
+
+.admin-settings .info-label {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+  transition: color 0.3s ease;
+}
+
+.admin-settings .info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a2e);
+  transition: color 0.3s ease;
+}
+
+/* Actions */
+.admin-settings .settings-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-settings .btn-primary,
+.admin-settings .btn-secondary,
+.admin-settings .btn-danger {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.admin-settings .btn-primary {
+  background: var(--accent-color, #00E676);
+  color: var(--accent-text, #000);
+}
+
+.admin-settings .btn-primary:hover {
+  background: var(--accent-hover, #00c853);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
+}
+
+.admin-settings .btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-color, #ddd);
+  color: var(--text-secondary, #666);
+}
+
+.admin-settings .btn-secondary:hover {
+  background: var(--hover-bg, #f5f5f5);
+  border-color: var(--text-secondary, #999);
+}
+
+.admin-settings .btn-danger {
+  background: transparent;
+  border: 1px solid var(--danger-color, #f44336);
+  color: var(--danger-color, #f44336);
+}
+
+.admin-settings .btn-danger:hover {
+  background: var(--danger-light, #ffebee);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+}
+
+.admin-settings.dark .form-group > label,
+.admin-settings.dark .account-email,
+.admin-settings.dark .info-label,
+.admin-settings.dark .page-header p {
+  color: var(--text-secondary);
+}
+
+.admin-settings.dark .account-name,
+.admin-settings.dark .info-value,
+.admin-settings.dark .page-header h1,
+.admin-settings.dark .card-header h3 {
+  color: var(--text-primary);
+}
+
+.admin-settings.dark .form-group input,
+.admin-settings.dark .form-group select {
+  background: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.admin-settings.dark .btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.admin-settings.dark .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.admin-settings.dark .btn-danger {
+  border-color: rgba(244, 67, 54, 0.35);
+  color: #fecaca;
+}
+
+.admin-settings.dark .btn-danger:hover {
+  background: rgba(244, 67, 54, 0.15);
+}
+
+/* Page Loading */
+.admin-settings .page-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  color: var(--text-secondary, #666);
+}
+
+.admin-settings .page-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color, #e8eaed);
+  border-top-color: var(--accent-color, #00E676);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .admin-settings .account-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .admin-settings .settings-form {
+    padding: 16px;
+  }
+
+  .admin-settings .card {
+    padding: 16px;
+  }
+
+  .admin-settings .settings-actions {
+    flex-direction: column;
+  }
+
+  .admin-settings .settings-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-settings .page-header h1 {
+    font-size: 24px;
+  }
+}
+

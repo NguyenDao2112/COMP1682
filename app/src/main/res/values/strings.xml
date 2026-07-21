@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Management Driver</string>
+    <string name="login_title">Driver Login</string>
+    <string name="login_welcome">Welcome Back</string>
+    <string name="login_subtitle">Log in to your dashboard</string>
+    <string name="hint_driver_id">Driver ID</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="dashboard_title">Daily Dispatch</string>
+    <string name="btn_start_shift">Start Shift</string>
+    <string name="btn_view_map">View Map</string>
+    <string name="status_pending">PENDING</string>
+    <string name="status_collected">COLLECTED</string>
+    <string name="status_full">FULL</string>
+    <string name="status_urgent">URGENT</string>
+    <string name="upcoming_stops">Upcoming Stops</string>
+    <string name="btn_capture">Capture &amp; Mark Collected</string>
+</resources>

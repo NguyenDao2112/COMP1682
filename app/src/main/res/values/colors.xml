@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Premium Enterprise Palette (Driver Command Center) -->
+    <color name="color_primary_green">#00E676</color>
+    <color name="color_secondary_green">#00C853</color>
+    <color name="color_dark_green">#007A43</color>
+
+    <color name="color_bg_main">#F4F6F8</color>
+    <color name="color_card_white">#FFFFFF</color>
+    <color name="charcoal">#121212</color>
+    <color name="color_text_secondary">#7A7A7A</color>
+
+    <color name="color_status_alert">#FF5252</color>
+    <color name="color_warning_orange">#FFB300</color>
+    <color name="color_info_blue">#2196F3</color>
+
+    <color name="color_map_dark">#1A1A1A</color>
+    <color name="color_glass_white">#B3FFFFFF</color>
+    <color name="color_glass_dark">#991A1A1A</color>
+
+    <!-- UI Aliases -->
+    <color name="color_accent_lime">#A3E635</color>
+    <color name="color_off_white">@color/color_bg_main</color>
+    <color name="color_surface_light">@color/color_bg_main</color>
+    <color name="color_soft_gray">@color/color_text_secondary</color>
+    <color name="background_light">@color/color_bg_main</color>
+
+    <!-- Legacy / Resource Fix Aliases -->
+    <color name="primary">@color/color_primary_green</color>
+    <color name="electric_lime">@color/color_accent_lime</color>
+    <color name="surface_light">@color/color_bg_main</color>
+    <color name="success">@color/color_primary_green</color>
+    <color name="forest_green">@color/color_dark_green</color>
+
+    <!-- System Standard Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="slate_900">#0F172A</color>
+    <color name="slate_600">#475569</color>
+    <color name="slate_200">#E2E8F0</color>
+    <color name="slate_100">#F1F5F9</color>
+    <color name="slate_50">#F8FAFC</color>
+    <color name="kpi_green">#E8F5E9</color>
+    <color name="kpi_red">#FFEBEE</color>
+    <color name="glass_overlay">#80000000</color>
+    <color name="glass_overlay_dark">#B3000000</color>
+</resources>

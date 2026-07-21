@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_main">
+
+    <!-- TOP BAR -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_map"
+            app:tint="@color/color_soft_gray"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Driver Login"
+                android:textColor="@color/charcoal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Secure Telemetry)"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/slate_100"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:text="RT-7429"
+                android:textColor="#334155"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- CENTER BRANDING -->
+    <LinearLayout
+        android:id="@+id/brandingSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_branding_container"
+            android:backgroundTint="@color/kpi_green">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_route"
+                app:tint="@color/color_primary_green"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="SMART WASTE"
+            android:textColor="@color/color_primary_green"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.05" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COMMAND CENTER"
+            android:textColor="@color/color_soft_gray"
+            android:textSize="12sp"
+            android:letterSpacing="0.2"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <!-- LOGIN CARD -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/loginCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:strokeColor="@color/slate_200"
+        app:strokeWidth="1.5dp"
+        app:layout_constraintTop_toBottomOf="@id/brandingSection"
+        app:layout_constraintBottom_toTopOf="@id/bottomStatus">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Driver Sign-in"
+                android:textColor="@color/charcoal"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Enter credentials to begin shift"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="12sp" />
+
+            <!-- Driver ID Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="DRIVER ID"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_input_rounded"
+                android:backgroundTint="#F8FAFC"
+                android:addStatesFromChildren="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_badge"
+                    app:tint="#64748B"
+                    tools:ignore="ContentDescription" />
+                <EditText
+                    android:id="@+id/etDriverId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="e.g DW-8829"
+                    android:textColorHint="#64748B"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Route Code/Password Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="ROUTE CODE"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_input_rounded"
+                android:backgroundTint="#F8FAFC"
+                android:addStatesFromChildren="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_badge"
+                    app:tint="#64748B"
+                    tools:ignore="ContentDescription" />
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="••••••••"
+                    android:textColorHint="#64748B"
+                    android:inputType="textPassword"
+                    android:textColor="@color/charcoal"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/ivTogglePassword"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_eye_off"
+                    app:tint="#64748B"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember Device"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/color_primary_green" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="Support?"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="24dp"
+                android:text="START SHIFT"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:backgroundTint="@null"
+                android:background="@drawable/bg_dashboard_gradient"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_chevron_right"
+                app:iconGravity="textEnd"
+                app:iconPadding="12dp"
+                app:rippleColor="#40FFFFFF" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:indeterminateTint="@color/color_primary_green"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- BOTTOM STATUS AREA -->
+    <LinearLayout
+        android:id="@+id/bottomStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/vPulseIndicator"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_pulse_dot" />
+            <TextView
+                android:id="@+id/tvConnectionStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="CENTRAL SERVER CONNECTED"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="V4.2.1-PRODUCTION"
+            android:textColor="@color/color_soft_gray"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

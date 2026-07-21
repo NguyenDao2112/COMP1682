@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_main">
+
+    <!-- TOP HEADER -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:background="@android:color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@color/color_card_white"
+            android:paddingHorizontal="16dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivStatusAvatar"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:padding="2dp"
+                android:src="@drawable/ic_driver_avatar"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                app:strokeColor="@color/color_primary_green"
+                app:strokeWidth="1.5dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRouteId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RT-7429"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.2"
+                    android:text="SYSTEM DIAGNOSTICS"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_status_online"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp">
+
+                <View
+                    android:id="@+id/vOnlineDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_pulse_dot" />
+
+                <TextView
+                    android:id="@+id/tvOnlineStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="ONLINE"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingBottom="120dp">
+
+            <!-- VEHICLE TELEMETRY CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/slate_200"
+                app:strokeWidth="1.5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="@color/color_card_white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/ivTruckIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_truck"
+                            app:tint="@color/color_primary_green" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ivTruckIcon"
+                            android:layout_marginStart="12dp"
+                            android:layout_centerVertical="true"
+                            android:text="VEHICLE #WM-402 (ACTIVE)"
+                            android:textColor="@color/color_primary_green"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.1" />
+                    </RelativeLayout>
+
+                    <!-- DIGITAL INSTRUMENT CLUSTER -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <!-- Fuel Gauge Block -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DIGITAL FUEL GAUGE"
+                            android:textColor="@color/color_soft_gray"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- 10 segments -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_active" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_inactive" />
+                                <View android:layout_width="10dp" android:layout_height="20dp" android:layout_marginEnd="3dp" android:background="@drawable/bg_fuel_segment_inactive" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="84%"
+                                android:textColor="@color/charcoal"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="OK"
+                                android:textColor="@color/color_primary_green"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- System metrics divider -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="16dp"
+                            android:background="@color/slate_100" />
+
+                        <!-- Tire, Brake and Service stats -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TIRE PRESSURE"
+                                    android:textColor="@color/color_soft_gray"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="110 PSI"
+                                    android:textColor="@color/charcoal"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="STABLE"
+                                    android:textColor="@color/color_primary_green"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BRAKE WEAR"
+                                    android:textColor="@color/color_soft_gray"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="GOOD"
+                                    android:textColor="@color/color_primary_green"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="94% LIFE"
+                                    android:textColor="@color/color_primary_green"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SERVICE IN"
+                                    android:textColor="@color/color_soft_gray"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="1.2k km"
+                                    android:textColor="@color/color_warning_orange"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SCHEDULED"
+                                    android:textColor="@color/color_warning_orange"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- APP SETTINGS SECTION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="DEVICE &amp; OPERATION SETTINGS"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="@color/slate_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- High Accuracy GPS -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+                        <ImageView
+                            android:id="@+id/ivGpsIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_navigation"
+                            app:tint="@color/color_primary_green" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ivGpsIcon"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="High Accuracy GPS"
+                                android:textColor="@color/charcoal"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Real-time sub-meter precision"
+                                android:textColor="@color/color_soft_gray"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/swGpsPrecision"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            app:thumbTint="@color/color_primary_green"
+                            app:trackTint="@color/kpi_green" />
+                    </RelativeLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginHorizontal="16dp" android:background="#0D000000" />
+
+                    <!-- Offline Map Mode -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+                        <ImageView
+                            android:id="@+id/ivMapIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_nav_map"
+                            app:tint="@color/color_soft_gray" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ivMapIcon"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Offline Map Mode"
+                                android:textColor="@color/charcoal"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pre-load route tile cache"
+                                android:textColor="@color/color_soft_gray"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/swOfflineMap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:checked="false"
+                            app:thumbTint="@color/color_soft_gray" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SUPPORT & SECURITY -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="SUPPORT &amp; SECURITY"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="@color/slate_200">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="16dp">
+                        <ImageView
+                            android:id="@+id/ivHistoryIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_nav_history"
+                            app:tint="@color/color_soft_gray" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ivHistoryIcon"
+                            android:layout_marginStart="16dp"
+                            android:layout_centerVertical="true"
+                            android:text="View System Diagnostics"
+                            android:textColor="@color/charcoal"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginHorizontal="16dp" android:background="#0D000000" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="16dp">
+                        <ImageView
+                            android:id="@+id/ivLogoutIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_logout"
+                            app:tint="@color/color_status_alert" />
+                        <TextView
+                            android:id="@+id/btnSignOut"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ivLogoutIcon"
+                            android:layout_marginStart="16dp"
+                            android:layout_centerVertical="true"
+                            android:text="Emergency Sign Out"
+                            android:textColor="@color/color_status_alert"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- LIVE TELEMETRY CONSOLE CARD -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="LIVE TELEMETRY &amp; OBD-II CONSOLE"
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#2E3846"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#0F172A"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ScrollView
+                        android:id="@+id/svDiagnosticConsole"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical">
+
+                        <TextView
+                            android:id="@+id/tvDiagnosticLogs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Initializing secure OBD-II scanner...\n"
+                            android:textColor="#22C55E"
+                            android:textSize="11sp"
+                            android:lineSpacingExtra="4dp" />
+                    </ScrollView>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvFooterDriverId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Driver ID: Loading..."
+                android:textColor="@color/color_soft_gray"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- BOTTOM COMMAND NAVIGATION -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom"
+        app:cardCornerRadius="36dp"
+        app:cardBackgroundColor="@color/white"
+        app:strokeColor="@color/slate_200"
+        app:strokeWidth="1.5dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/navRoute"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_map"
+                    app:tint="@color/color_soft_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navActivity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_history"
+                    app:tint="@color/color_soft_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activity"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navStatus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_warning"
+                    app:tint="@color/color_primary_green" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textColor="@color/color_primary_green"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_profile"
+                    app:tint="@color/color_soft_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/color_soft_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

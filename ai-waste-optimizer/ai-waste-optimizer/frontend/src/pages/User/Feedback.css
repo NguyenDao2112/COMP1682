@@ -1,0 +1,320 @@
+/* Feedback.css - Citizen Portal Design */
+.feedback-page {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  padding: var(--spacing-lg);
+}
+
+/* Header */
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.feedback-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 230, 118, 0.4);
+}
+
+.feedback-error {
+  background: rgba(255, 82, 82, 0.15);
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  color: #FF5252;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--text-secondary);
+}
+
+/* Feedback Form Card */
+.feedback-form-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback-form-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.feedback-form-card .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.feedback-form-card .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--spacing-md);
+}
+
+.feedback-form-card .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.feedback-form-card label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.feedback-form-card input,
+.feedback-form-card select,
+.feedback-form-card textarea {
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+  outline: none;
+  font-family: var(--font-family);
+}
+
+.feedback-form-card input:focus,
+.feedback-form-card select:focus,
+.feedback-form-card textarea:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.feedback-form-card input::placeholder,
+.feedback-form-card textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.feedback-form-card textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  color: var(--bg-dark);
+  border: none;
+  padding: 16px 32px;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: var(--spacing-md);
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Feedback List */
+.feedback-list {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feedback-list h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  margin: var(--spacing-sm) 0;
+}
+
+.feedback-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.feedback-item {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-normal);
+}
+
+.feedback-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.feedback-item-header {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.category-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.category-badge.suggestion {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+}
+
+.category-badge.complaint {
+  background: rgba(255, 82, 82, 0.2);
+  color: #FF5252;
+}
+
+.category-badge.compliment {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.category-badge.incident {
+  background: rgba(255, 193, 7, 0.2);
+  color: #FFC107;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #FFC107;
+}
+
+.status-badge.reviewed {
+  background: #2196F3;
+}
+
+.status-badge.resolved {
+  background: #4CAF50;
+}
+
+.feedback-item h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.feedback-content {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.feedback-location {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.feedback-location i {
+  color: var(--primary);
+}
+
+.feedback-date {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feedback-page {
+    padding: var(--spacing-md);
+  }
+
+  .feedback-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .feedback-form-card .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-item-header {
+    flex-wrap: wrap;
+  }
+}

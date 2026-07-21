@@ -1,0 +1,53 @@
+/* Toàn bộ trang nền trắng */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;          /* cho phép nội dung dài hơn vẫn scroll được */
+  background-color: #ffffff;  /* nền trắng toàn trang */
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Thanh điều hướng */
+.navbar {
+  width: 100%;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+  text-align: center; /* căn giữa toàn bộ link */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Link trong navbar */
+.navbar a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #0078D7; /* Windows blue */
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #005a9e;
+}
+
+/* Nội dung chính */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
