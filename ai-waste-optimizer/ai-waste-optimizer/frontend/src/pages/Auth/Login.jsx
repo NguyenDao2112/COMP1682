@@ -22,8 +22,8 @@ function Login() {
       if (response && response.access_token) {
         localStorage.setItem("token", response.access_token);
         
-        // Fetch user data to get the role
-        const user = await authAPI.getCurrentUser();
+        // Fetch user data to get the role or use response.user directly
+        const user = response.user || await authAPI.getCurrentUser();
         localStorage.setItem("user", JSON.stringify(user));
 
         // Route based on role

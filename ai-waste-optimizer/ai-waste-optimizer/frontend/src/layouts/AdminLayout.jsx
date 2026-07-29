@@ -63,8 +63,8 @@ function AdminLayout() {
           
           <div className="admin-profile">
             <div style={{textAlign: 'right'}}>
-              <div style={{fontSize: '14px', fontWeight: '700', color: '#fff'}}>System Admin</div>
-              <div style={{fontSize: '12px', color: 'var(--admin-text-muted)'}}>Clearance Level 5</div>
+              <div style={{fontSize: '14px', fontWeight: '700', color: '#fff'}}>Admin An (Nguyen Van An)</div>
+              <div style={{fontSize: '12px', color: 'var(--admin-text-muted)'}}>admin.an@wasteoptimizer.com</div>
             </div>
             <div className="admin-avatar"><i className="fas fa-user-astronaut"></i></div>
           </div>

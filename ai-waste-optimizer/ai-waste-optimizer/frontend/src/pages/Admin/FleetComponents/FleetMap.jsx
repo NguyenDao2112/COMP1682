@@ -80,7 +80,7 @@ function FleetMap({
       </div>
       <div className="map-wrapper">
         <MapContainer center={mapCenter || DANANG_CENTER} zoom={mapZoom} style={{ height: "100%", width: "100%" }}>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" subdomains={['a', 'b', 'c', 'd']} maxZoom={19} />
           <MapController center={mapCenter} zoom={mapZoom} />
           
           {viewMode === "all" && Object.entries(routeData).map(([name, rd]) => {

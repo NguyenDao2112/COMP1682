@@ -54,13 +54,14 @@ def login(
     db: Session = Depends(get_db)
 ):
     """Login to get access token."""
+    print(f"🔑 [Auth API] Login attempt for: '{form_data.username}'")
     user = db.query(User).filter(User.email == form_data.username).first()
     if not user:
-        # Try with username if email not found
         user = db.query(User).filter(User.username == form_data.username).first()
 
     try:
         if not user:
+            print(f"❌ [Auth API] User not found in DB: '{form_data.username}'")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email or password",
@@ -68,6 +69,7 @@ def login(
             )
 
         if not verify_password(form_data.password, user.hashed_password):
+            print(f"❌ [Auth API] Password mismatch for user: '{form_data.username}'")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email or password",
@@ -75,14 +77,18 @@ def login(
             )
 
         if not user.is_active:
+            print(f"❌ [Auth API] User is inactive: '{form_data.username}'")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Inactive user"
             )
+        print(f"✅ [Auth API] Login successful for: '{form_data.username}' (role: {user.role})")
+
+        role_val = user.role.value if hasattr(user.role, "value") else str(user.role)
 
         access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
         access_token = create_access_token(
-            data={"sub": user.email, "role": user.role.value},
+            data={"sub": user.email, "role": role_val},
             expires_delta=access_token_expires
         )
     except HTTPException:
@@ -101,7 +107,7 @@ def login(
             "email": user.email,
             "username": user.username,
             "full_name": user.full_name,
-            "role": user.role.value,
+            "role": role_val,
             "phone": user.phone,
             "address": user.address,
             "is_active": user.is_active,

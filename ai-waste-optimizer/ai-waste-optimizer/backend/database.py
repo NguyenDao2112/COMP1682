@@ -30,8 +30,14 @@ if database_url.startswith("sqlite:///"):
     if not os.path.isabs(sqlite_path):
         abs_sqlite_path = os.path.normpath(os.path.join(project_root, sqlite_path))
         database_url = "sqlite:///" + abs_sqlite_path.replace("\\", "/")
+    else:
+        abs_sqlite_path = sqlite_path
+    db_dir = os.path.dirname(abs_sqlite_path)
+    if db_dir:
+        os.makedirs(db_dir, exist_ok=True)
 elif database_url == "sqlite://" or database_url == "sqlite://./waste_optimizer.db":
     database_url = "sqlite:///" + default_sqlite_path.replace("\\", "/")
+    os.makedirs(os.path.dirname(default_sqlite_path), exist_ok=True)
 
 if "postgresql" in database_url or "postgres" in database_url:
     # Use PostgreSQL

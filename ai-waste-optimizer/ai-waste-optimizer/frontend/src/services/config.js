@@ -2,7 +2,9 @@
  * API Configuration - Single source of truth for API connection
  */
 
-export const API_URL = import.meta.env.VITE_API_URL || "";
+// API_URL must be EMPTY so browser uses relative paths (/api/...)
+// Vite dev server proxy then forwards /api/* → backend:8000 (Docker) or localhost:8000 (local)
+export const API_URL = "";
 
 /**
  * Get authentication token from localStorage

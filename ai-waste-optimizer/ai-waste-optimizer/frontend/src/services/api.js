@@ -26,6 +26,23 @@ export const configAPI = {
     });
     if (!response.ok) throw new Error("Failed to update config");
     return response.json();
+  },
+  createBackup: async (customName = null) => {
+    const url = customName ? `${API_URL}/api/config/backup?custom_name=${encodeURIComponent(customName)}` : `${API_URL}/api/config/backup`;
+    console.log("🔵 [createBackup] Calling:", url);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: getHeaders(),
+    });
+    console.log("🔵 [createBackup] Response status:", response.status);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("🔴 [createBackup] Error body:", errText);
+      throw new Error(`Failed to create DB backup snapshot: ${response.status} ${errText}`);
+    }
+    const data = await response.json();
+    console.log("✅ [createBackup] Success:", data);
+    return data;
   }
 };
 

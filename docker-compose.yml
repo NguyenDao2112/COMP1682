@@ -1,37 +1,56 @@
+# docker-compose.yml - Master Docker Compose configuration
 version: '3.8'
 
 services:
-  waste-auth-service:
-    image: waste-management-api:latest
+  # Component 1: PostgreSQL 15 Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: waste-optimizer-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: waste_optimizer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Component 2: Python FastAPI Backend API & OR-Tools Engine
+  backend:
+    build:
+      context: ./ai-waste-optimizer/ai-waste-optimizer
+      dockerfile: Dockerfile
+    container_name: waste-optimizer-api
     ports:
       - "8000:8000"
     environment:
-      - DB_URL=jdbc:postgresql://db:5432/waste_mgmt
-      - JWT_SECRET=your_secret_key
-    depends_on:
-      - db
+      DATABASE_URL: sqlite:///./waste_optimizer.db
+      SECRET_KEY: your-secret-key-change-in-production
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+    restart: always
 
-  route-manager:
-    image: route-manager:latest
+  # Component 3: React / Vite Web Dispatch Dashboard
+  frontend:
+    build:
+      context: ./ai-waste-optimizer/ai-waste-optimizer/frontend
+      dockerfile: Dockerfile
+    container_name: waste-optimizer-web
     ports:
-      - "8081:8081"
+      - "5173:5173"
     environment:
-      - DB_URL=jdbc:postgresql://db:5432/waste_mgmt
+      VITE_API_URL: http://localhost:8000
     depends_on:
-      - db
-
-  media-service:
-    image: media-service:latest
-    ports:
-      - "8082:8082"
+      - backend
     volumes:
-      - ./uploads:/app/uploads
+      - ./ai-waste-optimizer/ai-waste-optimizer/frontend:/app
+      - /app/node_modules
+    restart: unless-stopped
 
-  db:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=waste_mgmt
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin_pass
-    ports:
-      - "5432:5432"
+volumes:
+  postgres_data:

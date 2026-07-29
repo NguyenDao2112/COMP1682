@@ -88,6 +88,7 @@ function App() {
               <Route path="routes" element={<RouteDispatch />} />
               <Route path="analytics" element={<ManagerAnalytics />} />
               <Route path="fleet" element={<ManagerFleet />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
 
             {/* Driver Routes */}

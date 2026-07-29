@@ -119,7 +119,9 @@ def login_driver(
     Driver login endpoint.
     Returns JSON with token in format: {"token": "JWT_STRING"}
     """
-    driver = db.query(Driver).filter(Driver.driver_id == credentials.driver_id).first()
+    driver = db.query(Driver).filter(
+        (Driver.driver_id == credentials.driver_id) | (Driver.email == credentials.driver_id)
+    ).first()
     
     if not driver:
         raise HTTPException(
@@ -213,20 +215,26 @@ def get_route_sequence(
     """
     from backend.models.models import Bin, CollectionHistory, CollectionRoute
     
-    route_id_to_fetch = current_driver.current_route_id
-    
-    # If no active route, fetch the most recently completed route for today
+    # Priority 1: Check for an active IN_PROGRESS route assigned to this driver
+    active_route = db.query(CollectionRoute).filter(
+        (CollectionRoute.driver_name == current_driver.name) | 
+        (CollectionRoute.driver_name == current_driver.driver_id),
+        CollectionRoute.status == "in_progress"
+    ).first()
+
+    if active_route:
+        route_id_to_fetch = active_route.id
+    else:
+        route_id_to_fetch = current_driver.current_route_id
+
+    # Priority 2: If still no route, check for any pending or completed route for this driver
     if not route_id_to_fetch:
-        from datetime import datetime
-        recent_route = db.query(CollectionRoute).filter(
-            CollectionRoute.driver_name == current_driver.name,
-            CollectionRoute.status == "completed"
-        ).order_by(CollectionRoute.completed_at.desc()).first()
-        
-        if recent_route and recent_route.completed_at:
-            time_diff = datetime.utcnow() - recent_route.completed_at
-            if time_diff.total_seconds() < 24 * 3600:
-                route_id_to_fetch = recent_route.id
+        any_route = db.query(CollectionRoute).filter(
+            (CollectionRoute.driver_name == current_driver.name) | 
+            (CollectionRoute.driver_name == current_driver.driver_id)
+        ).first()
+        if any_route:
+            route_id_to_fetch = any_route.id
             
     if not route_id_to_fetch:
         return DriverRouteSequenceResponse(route=[])
@@ -237,7 +245,6 @@ def get_route_sequence(
     history_records = db.query(CollectionHistory).filter(
         CollectionHistory.route_id == route_id_to_fetch
     ).order_by(CollectionHistory.id.asc()).all()
-    # Removed local optimize_route_sequence to strictly respect Manager's AI assignment
     
     route_sequence = []
     completed_stops = 0
@@ -245,7 +252,7 @@ def get_route_sequence(
     
     for h in history_records:
         if h.bin:
-            is_collected = h.fill_level_after == 0.0
+            is_collected = (h.fill_level_after == 0.0 and h.collection_time is not None)
             if is_collected:
                 completed_stops += 1
                 

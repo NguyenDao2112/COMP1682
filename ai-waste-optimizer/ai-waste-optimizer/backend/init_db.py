@@ -39,31 +39,31 @@ def seed_users(db_session):
     
     users_data = [
         {
-            "email": "admin@wasteoptimizer.com",
-            "username": "admin",
-            "full_name": "Admin User",
+            "email": "admin.an@wasteoptimizer.com",
+            "username": "admin_an",
+            "full_name": "Admin An",
             "password": "admin123",
             "role": UserRole.ADMIN,
-            "phone": "+84123456789",
-            "address": "123 Admin Street"
+            "phone": "+84905123456",
+            "address": "Hai Chau District, Danang"
         },
         {
-            "email": "manager@wasteoptimizer.com",
-            "username": "manager",
-            "full_name": "Manager User",
+            "email": "dispatcher.duy@wasteoptimizer.com",
+            "username": "dispatcher_duy",
+            "full_name": "Dispatcher Duy",
             "password": "manager123",
             "role": UserRole.MANAGER,
-            "phone": "+84123456788",
-            "address": "456 Manager Avenue"
+            "phone": "+84905654321",
+            "address": "Son Tra District, Danang"
         },
         {
-            "email": "user@wasteoptimizer.com",
-            "username": "user",
-            "full_name": "Regular User",
-            "password": "user123",
-            "role": UserRole.USER,
-            "phone": "+84123456787",
-            "address": "789 User Road"
+            "email": "driver.dat@wasteoptimizer.com",
+            "username": "driver_dat",
+            "full_name": "Driver Dat",
+            "password": "driver123",
+            "role": UserRole.DRIVER,
+            "phone": "+84905888999",
+            "address": "Ngu Hanh Son District, Danang"
         }
     ]
     
@@ -84,42 +84,72 @@ def seed_users(db_session):
     print(f"? Created {len(users_data)} users")
 
 def seed_bins(db_session):
-    """Seed initial bins."""
-    print("\nSeeding bins...")
+    """Seed initial 30 bins across 3 districts."""
+    print("\nSeeding 30 bins...")
     
     existing = db_session.query(Bin).first()
     if existing:
         print("? Bins already exist, skipping...")
         return
     
-    districts = ["Hai Chau", "Thanh Khe", "Son Tra", "Ngu Hanh Son", "Lien Chieu"]
-    wards = ["Ward 1", "Ward 2", "Ward 3", "Ward 4", "Ward 5", "Ward 6", "Ward 7", "Ward 8", "Ward 9", "Ward 10"]
-    bin_types = ["general", "recyclable", "organic", "hazardous"]
-    statuses = ["active", "active", "active", "maintenance"]  # Mostly active
-    
-    random.seed(42)  # Reproducible
-    
+    hc_bins = [
+        ("BIN-HC-001", 16.0682, 108.2208, "Bach Dang Street, Hai Chau", 85.0),
+        ("BIN-HC-002", 16.0645, 108.2223, "Tran Phu Street, Hai Chau", 92.0),
+        ("BIN-HC-003", 16.0610, 108.2198, "Phan Chau Trinh, Hai Chau", 78.0),
+        ("BIN-HC-004", 16.0578, 108.2215, "Le Dinh Duong, Hai Chau", 88.0),
+        ("BIN-HC-005", 16.0532, 108.2230, "2 Thang 9 Street, Hai Chau", 95.0),
+        ("BIN-HC-006", 16.0501, 108.2185, "Nguyen Van Linh, Hai Chau", 72.0),
+        ("BIN-HC-007", 16.0465, 108.2152, "Hoang Diu Street, Hai Chau", 81.0),
+        ("BIN-HC-008", 16.0430, 108.2190, "Trung Nu Vuong, Hai Chau", 65.0),
+        ("BIN-HC-009", 16.0395, 108.2225, "30 Thang 4 Street, Hai Chau", 89.0),
+        ("BIN-HC-010", 16.0350, 108.2170, "Le Thanh Nghi, Hai Chau", 76.0),
+    ]
+
+    st_bins = [
+        ("BIN-ST-001", 16.0725, 108.2320, "Vo Van Kiet, Son Tra", 90.0),
+        ("BIN-ST-002", 16.0690, 108.2380, "Pham Van Dong, Son Tra", 84.0),
+        ("BIN-ST-003", 16.0650, 108.2435, "Vo Nguyen Giap, Son Tra", 96.0),
+        ("BIN-ST-004", 16.0612, 108.2350, "Tran Hung Dao, Son Tra", 79.0),
+        ("BIN-ST-005", 16.0580, 108.2395, "Ngo Quyen Street, Son Tra", 87.0),
+        ("BIN-ST-006", 16.0545, 108.2440, "Nguyen Van Thoai, Son Tra", 91.0),
+        ("BIN-ST-007", 16.0760, 108.2290, "Le Duc Tho, Son Tra", 73.0),
+        ("BIN-ST-008", 16.0800, 108.2340, "Yet Kieu Street, Son Tra", 82.0),
+        ("BIN-ST-009", 16.0840, 108.2400, "Hoang Sa Street, Son Tra", 68.0),
+        ("BIN-ST-010", 16.0510, 108.2475, "My Khe Beach Area, Son Tra", 94.0),
+    ]
+
+    lc_bins = [
+        ("BIN-LC-001", 16.0750, 108.1530, "Ton Duc Thang, Lien Chieu", 88.0),
+        ("BIN-LC-002", 16.0790, 108.1480, "Nguyen Luan Bieu, Lien Chieu", 74.0),
+        ("BIN-LC-003", 16.0830, 108.1420, "DUT Campus Area, Lien Chieu", 93.0),
+        ("BIN-LC-004", 16.0870, 108.1370, "Au Co Street, Lien Chieu", 80.0),
+        ("BIN-LC-005", 16.0910, 108.1310, "Pham Nhu Xuong, Lien Chieu", 86.0),
+        ("BIN-LC-006", 16.0950, 108.1250, "Nguyen Tat Thanh Rd, Lien Chieu", 71.0),
+        ("BIN-LC-007", 16.0710, 108.1580, "Nam Cao Street, Lien Chieu", 83.0),
+        ("BIN-LC-008", 16.0670, 108.1630, "Hoang Van Thai, Lien Chieu", 69.0),
+        ("BIN-LC-009", 16.1010, 108.1190, "Hoa Khanh IP, Lien Chieu", 91.0),
+        ("BIN-LC-010", 16.1060, 108.1130, "Lien Chieu Port, Lien Chieu", 77.0),
+    ]
+
     bins = []
-    for i in range(1, 51):  # 50 bins
-        district = random.choice(districts)
-        lat = round(random.uniform(16.04, 16.08), 6)
-        lng = round(random.uniform(108.20, 108.25), 6)
-        
-        bin_obj = Bin(
-            bin_id=f"BIN-{i:04d}",
-            latitude=lat,
-            longitude=lng,
-            address=f"{random.choice(wards)}, {district} District",
-            ward=random.choice(wards),
-            district=district,
-            capacity=round(random.uniform(500, 2000), 1),
-            current_fill_level=round(random.uniform(0, 95), 1),
-            bin_type=random.choice(bin_types),
-            status=random.choice(statuses),
-            last_collected=datetime.utcnow() - timedelta(days=random.randint(0, 7)),
-            next_scheduled=datetime.utcnow() + timedelta(days=random.randint(1, 14))
-        )
-        bins.append(bin_obj)
+    for b_id, lat, lng, addr, fill in hc_bins:
+        bins.append(Bin(
+            bin_id=b_id, latitude=lat, longitude=lng, address=addr,
+            ward="Ward 1", district="Hai Chau", capacity=1000.0,
+            current_fill_level=fill, bin_type="general", status="active"
+        ))
+    for b_id, lat, lng, addr, fill in st_bins:
+        bins.append(Bin(
+            bin_id=b_id, latitude=lat, longitude=lng, address=addr,
+            ward="Ward 2", district="Son Tra", capacity=1000.0,
+            current_fill_level=fill, bin_type="recyclable", status="active"
+        ))
+    for b_id, lat, lng, addr, fill in lc_bins:
+        bins.append(Bin(
+            bin_id=b_id, latitude=lat, longitude=lng, address=addr,
+            ward="Ward 3", district="Lien Chieu", capacity=1000.0,
+            current_fill_level=fill, bin_type="organic", status="active"
+        ))
     
     db_session.add_all(bins)
     db_session.commit()

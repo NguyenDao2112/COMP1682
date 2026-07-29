@@ -124,9 +124,9 @@ function ManagerDashboard() {
   }, []);
 
   const [alerts, setAlerts] = useState([
-    { id: 1, title: "Traffic Congestion Detected", desc: "Route RT-002 (Thanh Khe) is facing heavy traffic. AI rerouting suggested.", type: "warning", tag: "REROUTE", time: "Just now", targetDriver: "DX-9022" },
-    { id: 2, title: "Bin Overflow Prevented", desc: "Predictive model successfully prioritized Bin-045 before overflow.", type: "success", tag: "PREDICTED", time: "15m ago" },
-    { id: 3, title: "Vehicle Maintenance Due", desc: "TRK-005 engine efficiency dropped by 4%. Schedule checkup.", type: "warning", tag: "MAINTENANCE", time: "2h ago", targetDriver: "DX-1140" }
+    { id: 1, title: "Traffic Congestion Detected", desc: "Route RT-002 (Son Tra District Route - Driver B) is facing heavy traffic. AI rerouting suggested.", type: "warning", tag: "REROUTE", time: "Just now", targetDriver: "DX-1002" },
+    { id: 2, title: "Bin Overflow Prevented", desc: "Predictive model successfully prioritized Bin BIN-HC-005 in Hai Chau District before overflow.", type: "success", tag: "PREDICTED", time: "15m ago" },
+    { id: 3, title: "Vehicle Maintenance Due", desc: "Truck DX-1003 (Lien Chieu Route) engine efficiency dropped by 4%. Schedule checkup.", type: "warning", tag: "MAINTENANCE", time: "2h ago", targetDriver: "DX-1003" }
   ]);
 
   // UI States
@@ -142,7 +142,6 @@ function ManagerDashboard() {
   // Toasts State
   const [toasts, setToasts] = useState([]);
 
-  // --- LOGIC ---
   // --- LOGIC ---
   const mapUrl = darkMode 
     ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
@@ -202,6 +201,14 @@ function ManagerDashboard() {
     }
   };
 
+  const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+  const userName = (currentUser.full_name && currentUser.full_name !== "Manager") 
+    ? currentUser.full_name 
+    : "Dispatcher Duy (Tran Quoc Duy)";
+  const userEmail = (currentUser.email && !currentUser.email.includes("aiwaste.com")) 
+    ? currentUser.email 
+    : "dispatcher.duy@wasteoptimizer.com";
+
   return (
     <div className={`manager-dashboard ${darkMode ? "dark" : ""}`}>
       
@@ -248,8 +255,8 @@ function ManagerDashboard() {
               {showProfileMenu && (
                 <div className="profile-dropdown">
                   <div className="profile-dropdown-header">
-                    <h4>Manager</h4>
-                    <p>admin@aiwaste.com</p>
+                    <h4>{userName}</h4>
+                    <p>{userEmail}</p>
                   </div>
                   <button className="profile-dropdown-btn" onClick={() => navigate("/manager/settings")}>
                     <i className="fas fa-cog"></i> Settings

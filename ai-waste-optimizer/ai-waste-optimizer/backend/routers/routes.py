@@ -186,34 +186,32 @@ def update_route(
     for key, value in update_data.items():
         setattr(route, key, value)
         
-    # If route is being marked as completed, mark all bins as collected
-    if update_data.get("status") == "completed" and old_status != "completed":
-        from backend.models.models import CollectionHistory
-        from datetime import datetime
+    from backend.models.models import Driver, DriverStatus, CollectionHistory
+    from datetime import datetime
+
+    # 1. Sync Driver table so driver.current_route_id points to this route
+    if route.driver_name:
+        driver = db.query(Driver).filter(
+            (Driver.name == route.driver_name) | (Driver.driver_id == route.driver_name)
+        ).first()
+        if driver:
+            driver.current_route_id = route.id
+            if route.status == "in_progress":
+                driver.status = DriverStatus.ON_DUTY
+
+    # 2. If route is marked IN_PROGRESS (dispatched or status toggle), reset stops to pending
+    if route.status == "in_progress" and old_status != "in_progress":
+        history = db.query(CollectionHistory).filter(CollectionHistory.route_id == route.id).all()
+        for h in history:
+            h.fill_level_after = None
+            h.collection_time = None
+
+    # 3. If route is marked COMPLETED, set all stops as collected
+    elif route.status == "completed" and old_status != "completed":
         history = db.query(CollectionHistory).filter(CollectionHistory.route_id == route.id).all()
         for h in history:
             h.fill_level_after = 0.0
             h.collection_time = datetime.utcnow()
-            
-    # If route is being reverted from completed to in_progress, reassign the driver and reset bins
-    if old_status == "completed" and route.status == "in_progress":
-        from backend.models.models import CollectionHistory
-        
-        # Safely attempt to reassign driver (drivers table might not exist)
-        try:
-            from backend.models.models import Driver, DriverStatus
-            driver = db.query(Driver).filter(Driver.name == route.driver_name).first()
-            if driver:
-                driver.current_route_id = route.id
-                driver.status = DriverStatus.ON_DUTY
-        except Exception:
-            pass # Ignore if table doesn't exist
-            
-        # Reset bins to pending
-        history = db.query(CollectionHistory).filter(CollectionHistory.route_id == route.id).all()
-        for h in history:
-            h.fill_level_after = h.fill_level_before if h.fill_level_before is not None else 80.0
-            h.collection_time = None
     
     db.commit()
     db.refresh(route)

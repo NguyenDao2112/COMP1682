@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { path: "routes", icon: "fa-route", label: "Route Dispatch", section: "OPERATIONS" },
   { path: "fleet", icon: "fa-truck-moving", label: "Fleet Management", section: "MANAGEMENT" },
   { path: "analytics", icon: "fa-file-pdf", label: "Analytics & Reports", section: "MANAGEMENT" },
+  { path: "settings", icon: "fa-cog", label: "System Settings", section: "MANAGEMENT" },
 ];
 
 function ManagerLayout() {
@@ -18,8 +19,27 @@ function ManagerLayout() {
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token || user.role !== "manager") {
+    if (!token || (user.role !== "manager" && user.role !== "admin")) {
       navigate("/login");
+      return;
+    }
+
+    // Enforce JWT Expiration Policy from system_settings
+    const savedLocal = localStorage.getItem("system_settings");
+    if (savedLocal) {
+      try {
+        const parsed = JSON.parse(savedLocal);
+        const expireMins = parsed?.adminSecurity?.jwtExpireMinutes;
+        if (expireMins && expireMins <= 5) {
+          const timer = setTimeout(() => {
+            alert(`[JWT_SECURITY_POLICY_ENFORCED]: Global Access Token expired (${expireMins}m). Session terminated.`);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/login");
+          }, expireMins * 60 * 1000);
+          return () => clearTimeout(timer);
+        }
+      } catch (e) {}
     }
   }, [navigate, user.role]);
 

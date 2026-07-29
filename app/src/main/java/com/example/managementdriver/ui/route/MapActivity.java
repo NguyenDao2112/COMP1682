@@ -72,7 +72,7 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Configuration.getInstance().setUserAgentValue("AIWasteOptimizer/1.0");
+        Configuration.getInstance().setUserAgentValue("Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36");
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         Configuration.getInstance().setTileFileSystemCacheMaxBytes(500L * 1024 * 1024);
         
@@ -92,7 +92,18 @@ public class MapActivity extends AppCompatActivity {
 
 
         map = findViewById(R.id.map);
-        map.setTileSource(TileSourceFactory.OpenTopo);
+        map.setTileSource(new org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase(
+            "EsriWorldStreetMap",
+            0, 19, 256, ".png",
+            new String[] { "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/" }
+        ) {
+            @Override
+            public String getTileURLString(final long pMapTileIndex) {
+                return getBaseUrl() + org.osmdroid.util.MapTileIndex.getZoom(pMapTileIndex) + "/"
+                        + org.osmdroid.util.MapTileIndex.getY(pMapTileIndex) + "/"
+                        + org.osmdroid.util.MapTileIndex.getX(pMapTileIndex);
+            }
+        });
         map.setMultiTouchControls(true);
         map.setBuiltInZoomControls(false);
         map.setTilesScaledToDpi(true);

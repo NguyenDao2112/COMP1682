@@ -1,11 +1,8 @@
 # main.py - AI Waste Optimizer API
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
 import os
 import sys
-
-# Force reload - version 2
 
 # Determine project root directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -70,36 +67,9 @@ app.include_router(iot_router)
 app.include_router(health_router)
 app.include_router(config_router)
 
-# Legacy data file endpoints (for backward compatibility)
 @app.get("/")
 def root():
     return {"message": "AI Waste Optimizer API is running", "version": "1.0.0"}
-
-@app.get("/bins")
-def get_bins():
-    """Get bins data from CSV (legacy endpoint)."""
-    try:
-        csv_path = os.path.join(project_root, "backend", "data", "simulated_bins.csv")
-        if not os.path.exists(csv_path):
-            csv_path = os.path.join(current_dir, "data", "simulated_bins.csv")
-        df = pd.read_csv(csv_path)
-        data = df.to_dict(orient="records")
-        return {"status": "success", "data": data}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
-
-@app.get("/routes")
-def get_routes():
-    """Get optimized routes from CSV (legacy endpoint)."""
-    try:
-        csv_path = os.path.join(project_root, "backend", "data", "optimized_routes.csv")
-        if not os.path.exists(csv_path):
-            csv_path = os.path.join(current_dir, "data", "optimized_routes.csv")
-        df = pd.read_csv(csv_path)
-        data = df.to_dict(orient="records")
-        return {"status": "success", "data": data}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
 
 @app.get("/health")
 def health_check():

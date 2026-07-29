@@ -32,9 +32,9 @@ function RouteView() {
   }, [navigate]);
 
   useEffect(() => {
-    const fetchBins = async () => {
+    const fetchBins = async (isFirstLoad = false) => {
       try {
-        setLoading(true);
+        if (isFirstLoad) setLoading(true);
         const data = await driverAPI.getRouteSequence();
         setRouteData(data);
         
@@ -71,8 +71,12 @@ function RouteView() {
       }
     };
 
+    let interval;
     if (!isOfflineMode) {
-      fetchBins();
+      fetchBins(true);
+      interval = setInterval(() => {
+        fetchBins(false);
+      }, 5000);
     } else {
       // Load strictly from offline storage if mode is ON
       const offlineRoute = JSON.parse(localStorage.getItem("offlineRouteData"));
@@ -90,9 +94,12 @@ function RouteView() {
         setLoading(false);
       } else {
         // Fallback if no offline data exists
-        fetchBins();
+        fetchBins(true);
       }
     }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isOfflineMode]);
 
   const toggleOfflineMode = () => {
@@ -186,8 +193,9 @@ function RouteView() {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            attribution='&copy; OpenStreetMap'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; Google Maps'
+            url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+            maxZoom={20}
           />
           
           {routeCoordinates.length > 1 && (

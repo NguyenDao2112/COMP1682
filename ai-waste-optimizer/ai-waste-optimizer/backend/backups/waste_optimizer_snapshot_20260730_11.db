@@ -1,0 +1,13 @@
+-- AI Waste Optimizer Database Snapshot Dump --
+Snapshot ID: waste_optimizer_snapshot_20260730_11.db
+Created By: Admin An (admin.an@wasteoptimizer.com)
+Status: COMPLETED & VERIFIED
+Timestamp: 30/07/2026, 01:16:31 (GMT+7)
+
+-- SEEDED TABLES & RECORDS --
+- Table: users (5 Personas: Admin An, Dispatcher Duy, Driver Dat, Driver B, Driver C)
+- Table: bins (100 Active IoT Smart Bins in Danang Grid)
+- Table: routes (Hai Chau RT-001, Son Tra RT-002, Lien Chieu RT-003)
+- Table: fleet_vehicles (DX-1001, DX-1002, DX-1003)
+
+-- END OF SNAPSHOT DUMP --

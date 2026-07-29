@@ -351,7 +351,7 @@ export default function RouteDispatch() {
                   onChange={(e) => setDispatchSettings({...dispatchSettings, driver_name: e.target.value})}
                   disabled={!canSwitchVehicle || isDispatching}
                 >
-                  {["Nguyen Van Tuan", "Tran Van B", "Le Van C"].map(driver => (
+                  {["Driver Dat (Pham Van Dat)", "Driver B (Nguyen Van B)", "Driver C (Le Van C)"].map(driver => (
                     <option key={driver} value={driver}>{driver}</option>
                   ))}
                 </select>
