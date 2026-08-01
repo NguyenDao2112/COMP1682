@@ -73,6 +73,18 @@ public class LoginActivity extends AppCompatActivity {
         vPulseIndicator.startAnimation(pulse);
 
         observeNetwork();
+
+        // Subscribe to FCM topic 'all' for instant broadcast notifications
+        try {
+            com.google.firebase.messaging.FirebaseMessaging.getInstance().subscribeToTopic("all")
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            android.util.Log.d("FCM", "Successfully subscribed to topic 'all'");
+                        }
+                    });
+        } catch (Exception e) {
+            android.util.Log.e("FCM", "Topic subscribe error: " + e.getMessage());
+        }
     }
 
     private void observeNetwork() {
