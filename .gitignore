@@ -13,10 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
-*.zip
 ai-waste-optimizer - Copy/
-*.docx
-*.txt
-temp_docx/
-temp_docx2/
-diagrams_export/
+
+# Python bytecode caches in the active backend source tree.
+# Existing tracked .pyc files remain tracked and visible until separately reviewed.
+/ai-waste-optimizer/ai-waste-optimizer/backend/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/auth/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/models/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/routers/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/schemas/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/services/__pycache__/
+/ai-waste-optimizer/ai-waste-optimizer/backend/tests/__pycache__/
