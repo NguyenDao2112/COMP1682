@@ -1070,3 +1070,160 @@ No dependency installation, build, test, service startup, or cache regeneration 
 **REMAINING LIMITATION:** The pre-existing 14 tracked deletions and all other Phase 1C decisions remain unchanged. Phase 2 was not started.  
 **STATUS:** `VERIFIED` for this exact repository deletion and post-delete identity/source-integrity checks.
 Post-delete status: 74 modified, 14 deleted, 78 untracked entries (166 total; other status codes: 0).
+
+## Phase 2A Before-Repair Runtime Baseline (2026-09-28)
+
+**DATE:** 2026-09-28  
+**SOURCE IDENTITY:** Root `D:\COMP1682`, branch `main`; `HEAD == origin/main == 5e46d3dcb3aa9cc5fbe5c3d8f48ab570b1218b61`.  
+**PURPOSE:** Capture runtime evidence before repair. No application source, test, configuration, `.gitignore`, or project database was changed. No Phase 2B work was started. The only project-tree write for this phase is this recovery-record append.
+
+### Environment and database safety
+
+- Pre-phase Git state: 73 modified, 14 deleted, 77 untracked entries; 0 staged.
+- The project’s configured default SQLite database exists at `D:\COMP1682\ai-waste-optimizer\ai-waste-optimizer\waste_optimizer.db` (118,784 bytes; last-write timestamp 2026-07-29 19:06:02 UTC). It was not opened or used for the runtime checks. Its observed metadata was unchanged after the checks.
+- No backend `.env`, web-root `.env`, or process `DATABASE_URL` was present before the run. `backend/database.py` defaults to the existing project database, so application import/startup was not attempted until `DATABASE_URL` was explicitly overridden.
+- A new temporary directory, `C:\Users\ADMIN\AppData\Local\Temp\COMP1682_PHASE2A_20260928_5e46d3`, was confirmed absent before creation. The backend test/import/API data and frontend build output were directed there. The API server bound to `127.0.0.1` only. Test data was synthetic.
+- The backend virtual-environment launcher ran but did not expose the application dependencies. The bundled Python also lacked them. Existing system Python 3.11.9 had the runtime packages needed for the exercised backend checks; no dependencies were installed or upgraded. The existing project venv was not modified.
+
+### Runtime evidence
+
+| CHECK | RESULT | EVIDENCE / LIMITATION |
+|---|---|---|
+| Existing Option A+ backend tests | PASS | `python -m unittest discover -s tests -p test_*.py -v`; 7 tests passed in 2.199 s. Route-status test used in-memory SQLite; app database URL was separately forced to the new temporary path; bytecode writes were disabled. |
+| Optimizer unit/runtime calculation | PARTIAL | Unit tests passed. The live optimizer returned `solution_found` with `OR_TOOLS_CVRP`, one route, 3 bins, and 2,007 ms duration on the synthetic fixture. The API reported before 7.808 km, after 7.808 km, saved 0.000 km. |
+| Backend import/startup | PASS | Import created schema on the isolated database; app title `AI Waste Optimizer API`, 76 registered routes. Uvicorn started on loopback; `/health` returned HTTP 200. The health field `database=connected` is shallow, but subsequent DB-backed API reads and writes exercised the isolated DB. |
+| Authentication | PARTIAL | Synthetic manager login returned 200, wrong-password login returned 401, and manager `/api/auth/me` returned 200 with role `manager`. A synthetic ordinary-user login returned 200, but its optimization authorization request returned HTTP 500 rather than the intended 403: `require_manager` prints an emoji before raising, and the hidden Windows process output encoding was CP1252, causing `UnicodeEncodeError`. No authorization bypass was observed; the request failed before optimizer execution. Unauthenticated optimization returned 401. |
+| Bin read | PASS | Unauthenticated request returned 401; authenticated manager request returned 200 and 4 synthetic bins. |
+| Route read | PASS | Unauthenticated request returned 401; authenticated manager request returned 200 and 2 synthetic routes. |
+| Controlled optimization API | PARTIAL | Authenticated manager POST returned HTTP 200 and a valid solver response. It persisted `P2A-A, P2A-M, P2A-Z`; the response reported the same sequence. |
+| Persistence / reread | PASS with metric defect | Authenticated route reread returned path order `P2A-A, P2A-M, P2A-Z` and persisted distance 7.808 km, matching the optimization response and temporary DB rows. The pre-optimization persisted order was `P2A-Z, P2A-A, P2A-M`; its helper-calculated distance was 9.972 km. The API’s reported baseline was 7.808 km because the route adapter sorts assigned history by bin ID before solving, so it did not measure the actual persisted pre-run order. The sequence changed, while the API claimed zero distance saved. This is a reproducible before-repair defect, not measured operational savings. |
+| No-pending invalid state | PASS | With all synthetic routes temporarily set non-pending, optimization returned HTTP 409 `No pending routes are available for optimization`; a before/after snapshot around the request was unchanged. The fixture status was then restored in the temporary DB. |
+| Infeasible capacity request | PASS | Added one synthetic route requiring 5,000 kg against the configured 2,000 kg capacity. Optimization returned HTTP 422 with the capacity detail; a full route/bin/history snapshot before and after the failed request was identical. |
+| Frontend dependency/build baseline | PASS | No dependency installation. Vite 7.3.1 transformed 955 modules and built 17 output files successfully into the new temporary directory. Warnings: the largest JavaScript chunk was 1,438.54 kB, and `api.js` is both dynamically and statically imported. |
+| Manager UI data load | BLOCKED | Browser security policy denied access to `http://127.0.0.1:5173` after the user declined that browser request. No alternate browser or indirect UI route was attempted. |
+| Manager optimization UI | BLOCKED | Same browser-policy blocker; API-level optimization was exercised independently. |
+
+### Runtime failure register
+
+- **P2A-RF-01 — Persisted sequence not used for API baseline:** The optimizer API result used ID-sorted stop order as “before”, not the actual persisted order. On the synthetic fixture, persisted order changed from `P2A-Z, P2A-A, P2A-M` (9.972 km) to `P2A-A, P2A-M, P2A-Z` (7.808 km), while API metrics were 7.808 km before and after. Unit test `test_before_distance_uses_stored_baseline_sequence` does not cover this route-adapter sorting behavior.
+- **P2A-RF-02 — Authorization error becomes HTTP 500 in this Windows console environment:** An ordinary-user POST to the manager-only optimizer reaches a diagnostic `print` containing a Unicode emoji; CP1252 cannot encode it, so the exception handler returns HTTP 500 instead of HTTP 403. This was reproduced twice in the same runtime environment. The operation did not return a solver response.
+- **P2A-RF-03 — Frontend bundle size/import warning:** Build succeeded with a 1,438.54 kB minified main JavaScript chunk and mixed static/dynamic imports for `api.js`.
+- **P2A-RF-04 — Manager screen runtime evidence unavailable:** Browser access to the loopback app was denied by policy; UI loading and optimization error presentation remain unverified.
+
+### Option A+ and requirement evidence status
+
+| AREA | PHASE 2A RESULT |
+|---|---|
+| Authentication / authorization | PARTIAL — positive login/profile and bad-password checks passed; wrong-role denial returned 500 in this environment. |
+| Bin and route reads | PASS with manager token; anonymous reads returned 401. |
+| Optimizer tests | PASS — 7 existing tests. |
+| Optimizer API / persistence | PARTIAL — response and sequence persisted/reread, but baseline metric did not represent pre-existing stored order. |
+| Invalid / infeasible behavior | PASS — 409 and 422 respectively; request-level DB snapshots unchanged. |
+| Frontend production build | PASS with bundle/import warnings. |
+| Manager UI runtime | BLOCKED by browser-policy denial. |
+| Full Option A+ | FAIL — baseline metric defect and wrong-role HTTP 500; UI runtime evidence is also blocked. |
+
+The continuation requested an FR-01 through FR-06 evidence matrix but did not define those requirement IDs, and a repository Markdown/text search found no FR-01..FR-06 definitions. Exact requirement traceability is therefore **UNMAPPED**; no FR meanings are invented. The evidence above is grouped by tested behavior pending the authoritative FR definitions.
+
+### Integrity and completion
+
+A Phase 2A source/test/config inventory of 255 existing files was hashed before and after runtime work using sorted repository paths plus each file’s SHA-256. Both aggregate values were `3D4ABAAC5FE385E43BF8F1F28FC1C77A593499AA64626BCF16C3DC7F3EB2DB15`. Git status digest before the record append was unchanged at `702802C64E656710A95F352B00CCA7734BEC689B5D1FB44D99E0F1BE1425A68E`; `HEAD` and `origin/main` remained the source identity above; nothing was staged. The temporary backend and frontend servers were stopped after the checks. Temporary test database, build output, and logs remain in the isolated Temp directory for independent inspection.
+
+**PHASE STATUS:** Before-repair runtime evidence recorded with observed failures preserved. No repairs were made. Phase 2B has not started.
+
+### Phase 2A follow-up — standalone driver API script disposition
+
+The discovered `backend/scripts/test_driver_route_api.py` was not run. It is an interactive script pinned to `http://localhost:8000`, uses hardcoded driver credentials, prints bearer-token prefixes, and calls the driver route-sequence GET whose fallback may assign a route. It is outside the selected Option A+ core checks and was not a safe or necessary test to run against an unknown local service. No runtime claim is made for that optional driver/Android flow.
+
+## Phase 2B — Core Authorization Repair
+
+**DATE:** 2026-09-29
+**SOURCE IDENTITY:** Root `D:\COMP1682`, branch `main`; `HEAD == origin/main == 5e46d3dcb3aa9cc5fbe5c3d8f48ab570b1218b61`; historical provenance anchor `697b21ea63c8dd7ed39c530f1a0a725af0168b08`.
+**WORKING-TREE CONTEXT:** Before Phase 2B, status was 74 modified, 14 deleted, 77 untracked entries, and 0 staged. This was the accepted Phase 2A post-record state. The new test file is inside the already-untracked `backend/tests/` directory, so it does not add a separate top-level Git-status entry. No unrelated status change was observed during this phase.
+
+### P2A-RF-02 before and cause
+
+Reproduced before editing on a fresh temporary SQLite database at `C:\Users\ADMIN\AppData\Local\Temp\COMP1682_PHASE2B_20260929_5e46d3\before2\before.sqlite3`. The database was created only for this phase, populated with synthetic users, bins, route, and history, and isolated from the protected project database. Uvicorn ran only on `127.0.0.1` with `PYTHONIOENCODING=cp1252`.
+
+An ordinary authenticated `user` sent `POST /api/routes/optimize`. The request returned HTTP 500 with the generic internal-error response. The server traceback identifies `backend/auth/auth.py`, `require_manager`, and its emoji-prefixed `print()` as the failing operation: CP1252 raised `UnicodeEncodeError` while encoding the diagnostic, before the intended 403 `HTTPException` could be raised. The route/bin/history snapshot was unchanged, and the optimizer endpoint body did not run. Root cause classification: **PROVEN**.
+
+### Authorization contract and implementation
+
+`POST /api/routes/optimize` is protected by `Depends(require_manager)` in `backend/routers/routes.py`. `require_manager` permits active `manager` and `admin` users. It denies authenticated `user` and `driver` roles with HTTP 403. `get_current_active_user` and `get_current_user` validate the bearer token, resolve the current database user, and reject missing/invalid credentials with HTTP 401. Manager-only route planning writes use the same helper, including optimize, swap-trucks, create/update/delete route, start/complete, and driver assignment. Authenticated route/bin reads use `get_current_active_user`. Admin-only actions use `require_admin`, which admits only admin and denies other authenticated roles with 403. The Android driver identity uses a separate driver dependency; this phase does not change it.
+
+The repair removes the nonessential emoji-bearing `print()` from both `require_manager` and `require_admin`. These shared authorization helpers now evaluate the role and raise their existing 403 response without writing to stdout. The HTTP authorization rules and allowed roles were not broadened. Removing the admin-helper print is part of the same shared authorization failure mode; it prevents that helper from producing the same output-encoding failure on admin-only endpoints.
+
+### State, transitions, persistence, invariants, failures, and proof
+
+- **States:** S0 unauthenticated; S1 active authenticated ordinary user; S2 active manager; S3 active admin. A database-backed `driver` user is an authenticated non-manager/non-admin role for the shared helpers; the separate Android driver principal remains outside this change.
+- **Transitions:** protected request → bearer token validation → user resolution and active check → role evaluation → endpoint proceeds for allowed role, or HTTP 401/403 denial. A denied dependency prevents execution of the optimizer endpoint body.
+- **Persistence boundary:** a denial must leave route order/history, bin state, optimization result state, and collection state unchanged. The check used a complete before/after row snapshot of the disposable `users`, `bins`, `routes`, and `collection_history` tables; this application has no separate persisted optimizer-result table in this path.
+- **AUTH-I01:** missing and malformed bearer tokens returned 401 at the real HTTP endpoint.
+- **AUTH-I02 / AUTH-I03:** ordinary user denial returned HTTP 403, not 500; `require_manager` keeps the optimizer behind the server-side role boundary.
+- **AUTH-I04:** actual HTTP repro ran with CP1252 output and returned 403; focused tests also exercised both helper denial paths with a CP1252-strict stream. Diagnostic output no longer participates in the decision.
+- **AUTH-I05 / AUTH-I06:** manager and admin each received HTTP 200 from the same protected optimization endpoint with `solver_status=solution_found`; one route and three synthetic bins were processed.
+- **AUTH-I07:** all four disposable table snapshots were identical immediately before and after the ordinary-user denial. No denied-request endpoint body ran.
+- **Failure coverage:** missing token, malformed token, insufficient role, CP1252 console, and manager/admin allow paths were observed. Separate induced logger failure was not needed: the auth denial path no longer emits a diagnostic or calls the logger.
+
+### Files changed and test evidence
+
+Phase 2B changed only:
+
+1. `ai-waste-optimizer/ai-waste-optimizer/backend/auth/auth.py` — removed the two noncritical authorization `print()` calls; the other pre-existing dirty content in this file was not introduced by Phase 2B.
+2. `ai-waste-optimizer/ai-waste-optimizer/backend/tests/test_auth_authorization.py` — added four focused `unittest` cases for CP1252-safe manager/admin denials and manager/admin authorization.
+3. `RESIT_ENGINEERING_RECOVERY.md` — appended this Phase 2B verification and traceability record.
+
+Focused command, run from the backend directory with Python 3.11, bytecode writes disabled, and `DATABASE_URL` directed at a fresh temporary SQLite path:
+
+```text
+python -B -m unittest tests.test_auth_authorization -v
+```
+
+Result: **4 passed, 0 failed, 0 errors, 0 skipped; 0.000 s**.
+
+Existing safe backend regression command:
+
+```text
+python -B -m unittest tests.test_driver_sequence tests.test_route_optimizer tests.test_route_status_transition -v
+```
+
+Result: **7 passed, 0 failed, 0 errors, 0 skipped; 2.111 s**. The combined suite (`python -B -m unittest discover -s tests -p 'test_*.py' -v`) also passed all 11 tests in 2.163 s. This is focused backend evidence, not a full-system regression claim.
+
+### After runtime and disposable-database proof
+
+On a separate fresh temporary SQLite database at `C:\Users\ADMIN\AppData\Local\Temp\COMP1682_PHASE2B_20260929_5e46d3\after\after.sqlite3`, with the same synthetic fixture and CP1252 process output:
+
+| REQUEST | RESULT |
+|---|---|
+| Missing-token `POST /api/routes/optimize` | HTTP 401 |
+| Malformed-token `POST /api/routes/optimize` | HTTP 401 |
+| Ordinary `user` `POST /api/routes/optimize` | HTTP 403; authorization detail identified the authenticated username and role but contained no credentials; optimizer body not executed; `users`, `bins`, `routes`, and `collection_history` snapshots unchanged |
+| Authorized `manager` `POST /api/routes/optimize` | HTTP 200; `solution_found`; 1 route, 3 bins |
+| Authorized `admin` `POST /api/routes/optimize` | HTTP 200; `solution_found`; 1 route |
+
+The protected project database `D:\COMP1682\ai-waste-optimizer\ai-waste-optimizer\waste_optimizer.db` remained at 118,784 bytes with its observed 2026-07-29 19:06:02 UTC last-write timestamp. The before/after runtime fixtures and unittest database configuration were isolated under the listed Temp directory; no historical database or snapshot was opened for mutation. The Phase 2B temporary API was stopped and port 8172 has no listener. A separate Vite process for `D:\workspace\smart-travel-ar-fe` (PID 256208) was observed on `::1:5173`; it is unrelated to this project and was left untouched.
+
+### FR-01 through FR-06 traceability correction
+
+The Phase 2A original agent output said FR mapping was unavailable to that execution context. The correction below is an independent reviewer mapping using the subsequently supplied authoritative requirement definitions; it does not rewrite or attribute this mapping to the original Phase 2A execution.
+
+| REQUIREMENT | PHASE 2A REVIEWER CORRECTION |
+|---|---|
+| FR-01 — Manager authentication and core authorization | **PARTIAL before Phase 2B:** manager login/profile worked; wrong-role optimize hit P2A-RF-02. **PASS for the reviewed auth boundary after Phase 2B:** anonymous/malformed token → 401; ordinary user → 403; manager and admin → authorized 200. Other auth flows remain outside this focused proof. |
+| FR-02 — Manager retrieves demonstration bins and existing routes | **PASS at API runtime:** manager bin/route reads worked. Manager UI runtime remained blocked. |
+| FR-03 — Manager requests constrained stop ordering for eligible routes | **PARTIAL:** optimization executed for manager; P2A-RF-01 made the “before” distance semantics incorrect. |
+| FR-04 — Optimizer applies documented constraints and fails safely | **PARTIAL / observed cases pass:** no-pending 409 and over-capacity 422 left disposable state unchanged; broader boundary and concurrency behavior remains unverified. |
+| FR-05 — Backend persists ordering and manager retrieves it again | **PASS at backend runtime:** ordering persisted and reread consistently; UI reread remained unverified. |
+| FR-06 — Manager sees computed estimates with honest limitations | **FAIL / UI runtime blocked:** baseline comparison semantics are defective, UI wording needs later review, and manager browser behavior remains unverified. |
+
+### Strategy V2 and remaining defects
+
+**AI WASTE OPTIMIZER RESIT STRATEGY V2:** Option A+ remains the mandatory Tier 1 Minimum Acceptance Core. After Tier 1 is verified, the intended system may expand toward a coherent decision-support workflow using controlled IoT simulation, telemetry ingestion, bin/waste prioritisation, route optimization, driver collection workflow, state updates, and honest analytics. These Tier 2 capabilities are not implemented or verified by this phase. Predictive ML remains Tier 3 / stretch and requires genuine dataset, preprocessing, train/test separation, model, evaluation, versioned artifact, inference, API/UI integration, tests, and runtime evidence. No Tier 2 or Tier 3 capability was implemented here.
+
+P2A-RF-02 is **VERIFIED for the exact reported CP1252 runtime behavior**: wrong role → 403 instead of 500, with no denied-request mutation. The following findings remain open and were not changed: **P2A-RF-01**, incorrect before-distance/persisted-before-order semantics; **P2A-RF-03**, oversized frontend production chunk and mixed-import warning; **P2A-RF-04**, manager browser runtime evidence blocked by browser policy.
+
+### Integrity and diff review
+
+After Phase 2B, Git identity remains `HEAD == origin/main == 5e46d3dcb3aa9cc5fbe5c3d8f48ab570b1218b61`, branch `main`; status is 74 modified, 14 deleted, 77 untracked, 0 staged. The status counts include substantial pre-existing intentional changes and are not a Phase 2B-only delta. The only Phase 2B source/test/document paths are listed above. No frontend, optimizer, Android, IoT, fleet, analytics, configuration, or database project file was changed. Phase 2B created no generated bytecode intended for review and staged nothing.
+
+The Phase 2B source diff removes only the two auth diagnostics; the new tests are focused role assertions. `git diff --check` for `auth.py` passed. A broader check reported two pre-existing Markdown hard-break spaces in the Phase 2A recovery-record addition at its date/source-identity lines; those historical lines were not edited by Phase 2B. No new Phase 2B line has trailing whitespace. No commit or push was made.
